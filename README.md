@@ -1,3 +1,3 @@
 Tela de login feita com VueJS
 
-![Alt text](/bg.jpg?raw=true "Optional Title")
+![Alt text](/screenshot.png?raw=true "Tela de Login com VueJS")
