@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css?v2" />
+</head>
+<body>
+  <div id="app">
+    <form autocomplete="off" v-if="action=='login'" method="post" @submit="login">
+      <h3>{{lang.do_login}} | <button type="button" @click="setLang('pt-br')">PT-BR</button> <button type="button" @click="setLang('en-us')">EN-US</button></h3>
+      <div class="fields">
+        <div class="field">
+          <label>{{lang.email}}</label>
+          <input type="email" name="email" v-model="email" />
+        </div>
+        <div class="field">
+          <label>{{lang.password}}</label>
+          <input type="password" name="password" v-model="password" />
+        </div>
+        <div class="form-footer">
+          <a href="#" @click="action='reset'" class="reset" v-html="lang.reset_link"></a>
+          <button type="button">{{lang.login}}</button>
+        </div>
+      </div>
+    </form>
+    <form autocomplete="off" v-if="action=='reset'" method="post" @submit="reset_password">
+      <h3>{{lang.forget_pass}} | <button type="button" @click="setLang('pt-br')">PT-BR</button> <button type="button" @click="setLang('en-us')">EN-US</button></h3>
+      <div class="fields">
+        <div class="field">
+          <label>{{lang.email}}</label>
+          <input type="email" name="email" v-model="email" />
+        </div>
+        <div class="form-footer">
+          <a href="#" @click="action='login'" class="do-login" v-html="lang.do_login_link"></a>
+          <button type="button">{{lang.reset}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app', 
+      data() {
+        return {
+          action: 'login',
+          email: '',
+          password: '',
+          language: 'pt-br',
+          lang: {}
+        }
+      },
+      mounted() { 
+        if(sessionStorage.action) {
+          this.action = sessionStorage.action
+        }
+        if(sessionStorage.wplogin_language) {
+          this.language = sessionStorage.wplogin_language
+        } 
+
+        this.load_lang(this.language)
+
+      },
+      methods: {
+        setLang(code) {
+          this.language = code
+        },
+        login() {
+        },
+        reset_password() {
+
+        },
+        load_lang(code) {                
+          axios.get(`lang.${code}.json`).then(res => {
+            console.log(res)
+            this.lang = res.data
+          })
+        }
+      },
+      watch: {
+        language() {
+          sessionStorage.wplogin_language = this.language
+          this.load_lang(this.language)
+        },
+        action() {
+          sessionStorage.action = this.action
+        }
+      }
+    })
+  </script>
+</body>
+</html>

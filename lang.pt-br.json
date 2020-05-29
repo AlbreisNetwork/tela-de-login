@@ -1,0 +1,10 @@
+{
+  "password": "Senha",
+  "email": "E-mail",
+  "do_login": "Faça login",
+  "forget_pass": "Redefinir senha",
+  "login": "Fazer login",
+  "reset": "Alterar senha",
+  "reset_link": "alterar<br/>senha",
+  "do_login_link": "voltar para<br/>o login &nwarr;"
+}
